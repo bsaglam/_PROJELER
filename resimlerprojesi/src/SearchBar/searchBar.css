@@ -1,0 +1,8 @@
+.search-bar-container{
+    flex: 1;
+    padding:0 20px;
+}
+
+.search-bar-container > *{
+    flex: 1;
+}
