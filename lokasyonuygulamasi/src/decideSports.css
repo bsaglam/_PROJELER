@@ -1,0 +1,14 @@
+.decide-sports-container {
+ display : flex;
+ justify-content: center; /*sayfada enlemesine ortalamak için*/
+ align-items : center; /*boylamda ortalamak için*/
+ height: 100vh; /*boylamda ortalayabilmesi için gördüğün bütün sayfada ortala anlamına gelmektedir.*/
+ 
+}
+
+.sun-background{
+    background-color: yellow;
+}
+.snow-background{
+    background-color: lightblue;
+}

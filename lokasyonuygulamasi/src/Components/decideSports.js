@@ -1,40 +1,85 @@
 import React, { Component } from 'react'
+import '../decideSports.css'
+import Loader from './loader'
 
 class DecideSports extends Component {
     constructor(props) {
         super(props)
+
         this.state = {
-            longitude: 0, // state tanımı
+            latitude: 0, // state tanımı
             err: ''
         }
-    }
-    render() {
+
         window.navigator.geolocation.getCurrentPosition(
             (position) => {
                 console.log(position);
                 //state değerinin yeniden setlenmesi
-                this.setState({ longitude: position.coords.longitude });
+                this.setState({ latitude: position.coords.longitude });
+
             },
             (err) => {
                 console.log(err);
                 this.setState({ err: err.message })
             });
+    }
 
-        const { longitude, err } = this.state;
+    componentDidMount() {
 
-        if (longitude !== 0 && !err) {
-            return (<div>
-                konum : {longitude}
+    }
+    componentWillUnmount() {
+        this.setState({ latitude: 0, err: '' });
+    }
+
+    decideSport(lat) {
+        const month = new Date().getMonth();
+        console.log("Ay: ", month);
+        console.log("enlem: ", lat);
+        const winter = {text : "snowboarda gidebilrisin" , icon : "snowflake icon", css:".sun-background"};
+        const summer = {text : "yüzmeye gidebilrisin" , icon: "sun icon", css:".snow-background"};  
+        if (lat < 0) {
+             
+            if (month > 3 && month < 9) {
+                return summer;
+            } else {
+
+                return winter;
+            }
+        }
+        else {
+            if (month > 9 || month < 3) {
+                return winter;
+            } else {
+
+                return summer;
+            }
+        }
+    }
+    render() {
+
+        const { latitude, err } = this.state;
+
+
+        if (latitude !== 0 && !err) {
+            const sport = this.decideSport(latitude);
+            return (
+            <div className={'${sport.css + } decide-sports-container'}>
+                <h2 className="ui icon header">
+                    <i className={sport.icon}></i> 
+                    <div className="content">
+                        {sport.text}
+                    </div>
+                </h2>
             </div>)
         }
-        else if (longitude === 0 && err) {
+        else if (latitude === 0 && err) {
             return (<div>
                 hata: {err}
             </div>)
         }
         return (
             <div>
-               yükleniyor
+                <Loader text="yükleniyor"/>
             </div>
         )
     }
