@@ -1,0 +1,14 @@
+.new-tweet-container{
+    display: flex;
+    justify-content: center;
+}
+
+
+.tweet-wrapper {
+ flex-direction: column;
+ width: 80%;
+ 
+}
+.tweet-item{
+    width: 80%;
+}
